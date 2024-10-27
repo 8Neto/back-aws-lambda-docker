@@ -1,0 +1,4 @@
+requests
+python-decouple
+pymongo
+boto3

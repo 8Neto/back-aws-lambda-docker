@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo
+    container_name: db-mongo
+    volumes:
+      - ./data:/data/db
+
+    ports:
+      - "27017:27017"
+    networks:
+      - net-test
+  lambda:
+    container_name: ms-python
+    env_file: ./lambda/.env.dev
+    build:
+      context: ./lambda
+      dockerfile: Dockerfile
+    ports:
+      - "9000:8080"
+    platform: linux/amd64
+    depends_on:
+      - mongo
+    networks:
+      - net-test
+
+networks:
+  net-test:
